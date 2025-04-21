@@ -1,0 +1,539 @@
+/* --- START OF FILE checkout.css --- */
+
+/* Reset some default styles */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+body {
+    font-family: Arial, sans-serif; /* Consider using a variable from style.css if defined */
+    line-height: 1.6;
+    color: #333; /* Default text color */
+    background-color: #f5f5f5; /* Light background */
+    position: relative;
+    overflow-y: auto; /* Allow vertical scroll */
+}
+
+/* Define primary color variable if not already in style.css */
+:root {
+    --primary-color: #007bff; /* Example primary color - Adjust to match your site */
+    --danger-color: #dc3545; /* Standard Bootstrap danger color */
+}
+
+
+/* Checkout Page Layout */
+.checkout-section {
+    padding: 60px 0; /* Adjusted padding */
+    min-height: calc(100vh - 150px); /* Adjust based on header/footer height */
+}
+
+/* General Form Section Styling */
+.form-section {
+    margin-bottom: 30px;
+    padding: 25px;
+    background: #fff; /* White background for sections */
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+}
+
+/* Titles within sections */
+.h4-title {
+    font-size: 1.25rem; /* Slightly larger title */
+    font-weight: 600;
+    margin-bottom: 1.5rem; /* More space below title */
+    color: #333;
+}
+.h5-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #444;
+}
+
+/* Form element styling (Ensure consistency with bootstrap or your style.css) */
+.form-group {
+    margin-bottom: 1rem; /* Standard spacing */
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 0.75rem; /* Slightly adjusted padding */
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #80bdff; /* Highlight focus */
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Focus shadow */
+}
+
+textarea.form-control {
+    min-height: calc(1.5em + 1rem + 2px); /* Default Bootstrap height */
+}
+
+.form-check-label {
+    margin-bottom: 0; /* Align with checkbox */
+}
+
+.form-check-input {
+    margin-top: 0.3rem; /* Align checkbox */
+}
+
+/* Payment Method Radio Button Styling */
+.payment-methods {
+    margin-top: 15px;
+}
+
+.method {
+    margin-bottom: 15px;
+    position: relative;
+}
+
+/* Hide actual radio */
+.method input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    cursor: pointer;
+    z-index: 2; /* Make sure input is clickable over label area */
+}
+
+.method label {
+    display: block;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    position: relative;
+    padding-left: 45px; /* Space for custom radio button */
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+/* Custom radio button outer circle */
+.method label::before {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px; /* Slightly larger */
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #ccc; /* Thicker border */
+    background: #fff;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+}
+
+/* Custom radio button inner dot */
+.method label::after {
+    content: '';
+    position: absolute;
+    left: 25px; /* Centered within the ::before circle (15px + 20px/2) */
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0); /* Start hidden and centered */
+    width: 10px; /* Size of the inner dot */
+    height: 10px;
+    border-radius: 50%;
+    background: var(--primary-color); /* Use site's primary color */
+    transition: transform 0.2s ease;
+}
+
+/* Style when radio is checked */
+.method input[type="radio"]:checked + label {
+    border-color: var(--primary-color);
+    background: rgba(0, 123, 255, 0.05); /* Light primary background tint */
+}
+
+.method input[type="radio"]:checked + label::before {
+    border-color: var(--primary-color);
+}
+
+.method input[type="radio"]:checked + label::after {
+     transform: translate(-50%, -50%) scale(1); /* Show inner dot */
+}
+
+/* Focus style for accessibility when navigating with keys */
+.method input[type="radio"]:focus + label {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.method-title {
+    display: block;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 3px;
+}
+
+.method-desc {
+    display: block;
+    font-size: 14px;
+    color: #777;
+}
+
+
+/* UPI Details Section Styles */
+#upiDetailsSection {
+    border: 1px dashed #ddd; /* Dashed border to indicate optional section */
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 8px;
+    background-color: #f8f9fa; /* Very light grey background */
+}
+
+.upi-qr-image {
+    max-width: 180px; /* Adjust QR size */
+    height: auto;
+    display: block;
+    margin: 0 auto 15px auto; /* Center image */
+    border: 1px solid #e0e0e0;
+    padding: 5px;
+    background-color: #fff; /* White background behind QR */
+}
+
+#upiIdValue {
+    font-weight: bold;
+    color: var(--primary-color); /* Use primary color */
+    font-size: 1.1em;
+    word-break: break-all; /* Prevent long IDs overflowing */
+}
+
+/* File Input Styling */
+#paymentScreenshot {
+    /* Uses .form-control styles by default */
+}
+
+/* Ensure focus state is visible */
+#paymentScreenshot:focus {
+   border-color: #80bdff;
+   outline: 0;
+   box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);
+}
+
+
+/* Order Summary Styling */
+.order-summary {
+    background: #fdfdfd; /* Slightly lighter than page background */
+    padding: 30px;
+    border-radius: 10px;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+    position: sticky;
+    top: 20px; /* Adjust based on header height and desired spacing */
+}
+
+.order-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
+.order-item:last-child {
+    border-bottom: none;
+}
+
+.item-info {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Allow info to take available space */
+    margin-right: 15px; /* Space before price */
+}
+.item-name {
+    font-weight: 500;
+    margin-bottom: 4px;
+    color: #444;
+}
+.item-quantity {
+    font-size: 14px;
+    color: #777;
+}
+.item-price {
+    font-weight: 500;
+    color: #333;
+    white-space: nowrap; /* Prevent price breaking */
+}
+
+.order-totals {
+    margin-top: 20px;
+}
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 0.95rem;
+}
+.total-row span:first-child {
+    color: #555;
+}
+.total-row span:last-child {
+    font-weight: 500;
+    color: #333;
+}
+
+.grand-total {
+    font-weight: 600;
+    font-size: 1.15rem; /* Slightly larger total */
+    margin-top: 10px;
+    padding-top: 15px; /* More padding above */
+    border-top: 1px solid #ccc; /* More prominent separator */
+}
+.grand-total span:first-child {
+    color: #333;
+}
+.grand-total span:last-child {
+    color: var(--primary-color); /* Highlight final total */
+}
+
+/* Validation Styles */
+.text-danger {
+    color: var(--danger-color) !important; /* Ensure * indicators are red */
+}
+
+.is-invalid {
+    border-color: var(--danger-color) !important; /* Use variable */
+    /* Add subtle background/icon for invalid state if desired */
+    /* background-image: url("data:image/svg+xml,..."); */
+    /* background-repeat: no-repeat; */
+    /* background-position: right calc(.375em + .1875rem) center; */
+    /* background-size: calc(.75em + .375rem) calc(.75em + .375rem); */
+}
+/* Make sure focus shadow overrides invalid state */
+.form-control.is-invalid:focus {
+  border-color: var(--danger-color);
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+.invalid-feedback {
+    display: none; /* Hidden by default */
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 0.875em;
+    color: var(--danger-color); /* Use variable */
+}
+
+/* Show feedback when input has .is-invalid */
+/* This works if feedback immediately follows the input */
+.is-invalid + .invalid-feedback,
+/* This is more general if feedback is nested (e.g., inside parent div) */
+.form-control.is-invalid ~ .invalid-feedback,
+.form-check-input.is-invalid ~ .invalid-feedback,
+input[type="file"].is-invalid ~ .invalid-feedback /* Specific for file */
+{
+    display: block;
+}
+
+
+/* Toast Message Styling */
+.toast-message {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(51, 51, 51, 0.9); /* Dark background */
+    color: white;
+    padding: 12px 24px;
+    border-radius: 4px;
+    opacity: 0;
+    transition: opacity 0.3s ease, bottom 0.3s ease; /* Animate opacity and position */
+    z-index: 1050; /* High z-index */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    font-size: 0.95em;
+    pointer-events: none; /* Prevent interaction */
+}
+
+.toast-message.show {
+    opacity: 1;
+    bottom: 30px; /* Slide up slightly when shown */
+}
+
+/* Optional: Style toast types */
+.toast-message.success {
+    background-color: rgba(40, 167, 69, 0.9); /* Green */
+}
+.toast-message.error {
+    background-color: rgba(220, 53, 69, 0.9); /* Red */
+}
+.toast-message.info {
+     background-color: rgba(0, 123, 255, 0.9); /* Blue */
+}
+
+
+/* Layout Helpers */
+#viewport {
+    min-height: 100vh; /* Ensure viewport takes full height */
+    display: flex;
+    flex-direction: column;
+    /* Ensure viewport itself doesn't prevent scrolling */
+    overflow: visible;
+    height: auto;
+}
+
+#js-scroll-content {
+    flex: 1; /* Allow content to grow and push footer down */
+     /* Ensure content area doesn't prevent scrolling */
+     overflow: visible;
+     height: auto;
+}
+
+.bottom-footer {
+    margin-top: auto; /* Push footer to the bottom */
+    /* Add other footer styles from style.css if needed */
+}
+
+/* Buttons (Ensure consistency with style.css or Bootstrap) */
+.sec-btn { /* Assuming this is your base button class */
+    display: inline-block;
+    font-weight: 600;
+    color: #212529;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: 0.5rem 1rem; /* Adjust padding */
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.primary-btn { /* Style for main action button */
+    color: #fff;
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+.primary-btn:hover {
+    color: #fff;
+    background-color: #0056b3; /* Darker shade on hover */
+    border-color: #0056b3;
+}
+.primary-btn:disabled {
+    background-color: #6c757d; /* Grey out when disabled */
+    border-color: #6c757d;
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+.outline-btn { /* Style for secondary/back button */
+     color: var(--primary-color);
+     border-color: var(--primary-color);
+ }
+ .outline-btn:hover {
+     color: #fff;
+     background-color: var(--primary-color);
+     border-color: var(--primary-color);
+ }
+
+.w-100 { width: 100% !important; } /* Bootstrap width utility */
+
+/* Responsive Adjustments */
+@media (max-width: 991px) { /* Medium devices (tablets, less than 992px) */
+    .order-summary {
+        margin-top: 30px; /* Add space when summary stacks below */
+        position: static; /* Disable sticky positioning */
+    }
+    .checkout-section {
+        padding: 40px 0; /* Reduce padding on smaller screens */
+    }
+}
+
+@media (max-width: 767px) { /* Small devices (landscape phones, less than 768px) */
+
+    .h4-title {
+        font-size: 1.15rem; /* Slightly smaller titles */
+    }
+    .form-section {
+        padding: 20px; /* Reduce padding inside sections */
+    }
+    .order-summary {
+        padding: 20px;
+    }
+
+    .form-actions { /* Stack buttons vertically if needed */
+       /* display: flex; */
+       /* flex-direction: column; */
+    }
+    .form-actions .sec-btn {
+        /* width: 100%; */ /* Make buttons full width if stacked */
+        /* margin-bottom: 10px; */
+    }
+    .form-actions .sec-btn:last-child {
+         /* margin-bottom: 0; */
+    }
+    /* If using the Back button */
+    .form-actions {
+        display: flex;
+        flex-direction: column-reverse; /* Place Order button first visually */
+    }
+     .form-actions .sec-btn {
+         width: 100%;
+         margin-bottom: 10px;
+     }
+     .form-actions .sec-btn:first-child { /* Targets Place Order button now */
+         margin-bottom: 0;
+     }
+     .form-actions .outline-btn { /* Targets Back button now */
+        margin-bottom: 10px;
+     }
+
+/* MODIFICATION: Removed the body.body-fixed override section */
+
+} /* Toast Message Styling */
+.toast-message {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(51, 51, 51, 0.9); /* Dark background */
+    color: white;
+    padding: 20px 40px; /* Increased padding for bigger size */
+    border-radius: 8px; /* Larger border radius */
+    opacity: 0;
+    transition: opacity 0.3s ease, bottom 0.3s ease;
+    z-index: 1050;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3); /* More prominent shadow */
+    font-size: 1.2em; /* Larger font size */
+    pointer-events: none;
+    min-width: 300px; /* Minimum width */
+    text-align: center;
+    font-weight: 500; /* Slightly bolder text */
+}
+
+.toast-message.show {
+    opacity: 1;
+    bottom: 40px; /* Move up more when shown */
+}
+
+/* Optional: Style toast types */
+.toast-message.success {
+    background-color: rgba(40, 167, 69, 0.95); /* More solid green */
+    font-size: 1.3em; /* Even larger for success messages */
+    padding: 25px 50px; /* More padding for success */
+}
+/* Enable scrolling for cart page layout */
+#viewport {
+    height: auto;
+    overflow-y: auto;
+  }
+  
+  #js-scroll-content {
+    min-height: 100%;
+  }

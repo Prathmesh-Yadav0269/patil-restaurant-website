@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation - Patil Restaurant</title>
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="checkout.css">
+</head>
+<body class="body-fixed">
+    <!-- Your header code from checkout.html here -->
+    
+    <div id="viewport">
+        <div id="js-scroll-content">
+            <section class="checkout-section py-5">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <div class="confirmation-card text-center p-5">
+                                <div class="icon-success mb-4">
+                                    <i class="uil uil-check-circle" style="font-size: 72px; color: #28a745;"></i>
+                                </div>
+                                <h2 class="h2-title mb-3">Order Confirmed!</h2>
+                                <p class="mb-4">Thank you for your order. We've sent a confirmation to your email.</p>
+                                
+                                <div class="order-details mb-5 text-left">
+                                    <h4 class="h4-title mb-3">Order Details</h4>
+                                    <div id="orderDetails">
+                                        <!-- Order details will be loaded here -->
+                                    </div>
+                                </div>
+                                
+                                <a href="index.html" class="sec-btn primary-btn">Back to Home</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Your footer code from checkout.html here -->
+             
+        </div>
+    </div>
+
+    <!-- Your existing scripts -->
+    <script src="assets/js/jquery-3.5.1.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="main.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const orderData = JSON.parse(localStorage.getItem('currentOrder')) || {};
+            const orderDetails = document.getElementById('orderDetails');
+            
+            if (orderData.payment) {
+                let itemsHtml = '';
+                orderData.items.forEach(item => {
+                    itemsHtml += `
+                        <div class="order-item">
+                            <div class="item-info">
+                                <span class="item-name">${item.name}</span>
+                                <span class="item-quantity">×${item.quantity}</span>
+                            </div>
+                            <span class="item-price">₹${(item.price * item.quantity).toFixed(2)}</span>
+                        </div>
+                    `;
+                });
+                
+                orderDetails.innerHTML = `
+                    ${itemsHtml}
+                    <div class="total-row">
+                        <span>Subtotal</span>
+                        <span>₹${orderData.totals.subtotal.toFixed(2)}</span>
+                    </div>
+                    <div class="total-row">
+                        <span>Delivery</span>
+                        <span>₹${orderData.totals.deliveryFee.toFixed(2)}</span>
+                    </div>
+                    <div class="total-row">
+                        <span>Tax</span>
+                        <span>₹${orderData.totals.tax.toFixed(2)}</span>
+                    </div>
+                    <div class="total-row grand-total">
+                        <span>Total</span>
+                        <span>₹${orderData.totals.total.toFixed(2)}</span>
+                    </div>
+                    <div class="order-meta mt-4">
+                        <p><strong>Order ID:</strong> ${orderData.payment.transactionId}</p>
+                        <p><strong>Payment Method:</strong> ${orderData.payment.method === 'google_pay' ? 'Google Pay' : 'Credit Card'}</p>
+                        <p><strong>Delivery Address:</strong> ${orderData.delivery.address}, ${orderData.delivery.city}, ${orderData.delivery.postalCode}</p>
+                    </div>
+                `;
+                
+                // Clear the cart after order is confirmed
+                localStorage.removeItem('cart');
+            } else {
+                // If no order data, redirect to home
+                window.location.href = 'index.html';
+            }
+        });
+    </script>
+</body>
+</html>

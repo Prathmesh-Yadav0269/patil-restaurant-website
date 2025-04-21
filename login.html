@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register & Login Form</title>
+    <link rel="stylesheet" href="login.css" />
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <style>
+      /* Error message styling */
+      .error-message {
+        color: #ff3860;
+        font-size: 12px;
+        margin-top: 5px;
+        display: none;
+      }
+      .show-error {
+        display: block;
+      }
+      .btn.loading {
+        position: relative;
+        pointer-events: none;
+        color: transparent;
+      }
+      .btn.loading::after {
+        content: "";
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        border: 3px solid transparent;
+        border-top-color: #fff;
+        border-radius: 50%;
+        animation: button-loading-spinner 1s ease infinite;
+      }
+      @keyframes button-loading-spinner {
+        from { transform: rotate(0turn); }
+        to { transform: rotate(1turn); }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <span class="bg-animate"></span>
+      <span class="bg-animate2"></span>
+
+      <div class="form-box login">
+        <h2 class="animation" style="--i: 0; --j: 21">Login</h2>
+        <form id="loginForm">
+          <div class="input-box animation" style="--i: 1; --j: 22">
+            <input type="text" id="loginUsername" required />
+            <label>Username</label>
+            <i class="bx bxs-user"></i>
+            <span class="error-message" id="loginUsernameError"></span>
+          </div>
+          <div class="input-box animation" style="--i: 2; --j: 23">
+            <input type="password" id="loginPassword" required />
+            <label>Password</label>
+            <i class="bx bxs-lock-alt"></i>
+            <span class="error-message" id="loginPasswordError"></span>
+          </div>
+          <div class="remember-forgot animation" style="--i: 3; --j: 24">
+            <label>
+              <input type="checkbox" id="rememberMe">
+              Remember me
+            </label>
+            <a href="#">Forgot password?</a>
+          </div>
+          <button type="submit" class="btn animation" style="--i: 4; --j: 25">
+            Login
+          </button>
+          <div class="logreg-link animation" style="--i: 5; --j: 26">
+            <p>
+              Don't have an account?
+              <a href="#" class="register-link">Sign Up</a>
+            </p>
+          </div>
+          <div class="guest-link animation" style="--i: 6; --j: 27">
+            <p>
+              Just want to browse?
+              <a href="index.html">Continue as Guest</a>
+            </p>
+          </div>
+        </form>
+      </div>
+
+      <div class="info-text login">
+        <h2 class="animation" style="--i: 0; --j: 19">Welcome Back, Foodie!</h2>
+        <p class="animation" style="--i: 1; --j: 20">
+          Login & Let's Eat !!
+        </p>
+      </div>
+
+      <div class="form-box register">
+        <h2 class="animation" style="--i: 17; --j: 0">Sign Up</h2>
+        <form id="registerForm">
+          <div class="input-box animation" style="--i: 18; --j: 1">
+            <input type="text" id="regUsername" required minlength="3" />
+            <label>Username (min 3 chars)</label>
+            <i class="bx bxs-user"></i>
+            <span class="error-message" id="regUsernameError"></span>
+          </div>
+          <div class="input-box animation" style="--i: 19; --j: 2">
+            <input type="email" id="regEmail" required />
+            <label>Email</label>
+            <i class="bx bxs-envelope"></i>
+            <span class="error-message" id="regEmailError"></span>
+          </div>
+          <div class="input-box animation" style="--i: 20; --j: 3">
+            <input type="password" id="regPassword" required minlength="6" />
+            <label>Password (min 6 chars)</label>
+            <i class="bx bxs-lock-alt"></i>
+            <span class="error-message" id="regPasswordError"></span>
+          </div>
+          <div class="input-box animation" style="--i: 21; --j: 4">
+            <input type="password" id="regConfirmPassword" required />
+            <label>Confirm Password</label>
+            <i class="bx bxs-lock-alt"></i>
+            <span class="error-message" id="regConfirmPasswordError"></span>
+          </div>
+          <button type="submit" class="btn animation" style="--i: 22; --j: 5">
+            Register
+          </button>
+          <div class="logreg-link animation" style="--i: 23; --j: 6">
+            <p>
+              Already have an account?
+              <a href="#" class="login-link">Login</a>
+            </p>
+          </div>
+        </form>
+      </div>
+
+      <div class="info-text register">
+        <h2 class="animation" style="--i: 17; --j: 0">One step closer to flavor heaven !!</h2>
+        <p class="animation" style="--i: 18; --j: 1">
+          let's start !!
+        </p>
+      </div>
+    </div>
+
+    <script>
+      // DOM Elements
+      const wrapper = document.querySelector(".wrapper");
+      const registerLink = document.querySelector(".register-link");
+      const loginLink = document.querySelector(".login-link");
+      const loginForm = document.getElementById("loginForm");
+      const registerForm = document.getElementById("registerForm");
+
+      // Toggle between login and register forms
+      registerLink.onclick = () => {
+        wrapper.classList.add("active");
+        clearErrors();
+      };
+
+      loginLink.onclick = () => {
+        wrapper.classList.remove("active");
+        clearErrors();
+      };
+
+      // Clear all error messages
+      function clearErrors() {
+        document.querySelectorAll('.error-message').forEach(el => {
+          el.classList.remove('show-error');
+          el.textContent = '';
+        });
+      }
+
+      // Show error for a specific field
+      function showError(fieldId, message) {
+        const errorElement = document.getElementById(fieldId);
+        errorElement.textContent = message;
+        errorElement.classList.add('show-error');
+      }
+
+      // Validate email format
+      function isValidEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      }
+
+      // Login form submission
+      loginForm.addEventListener("submit", async function(e) {
+        e.preventDefault();
+        clearErrors();
+        
+        const username = document.getElementById("loginUsername").value.trim();
+        const password = document.getElementById("loginPassword").value.trim();
+        const rememberMe = document.getElementById("rememberMe").checked;
+        
+        // Validate inputs
+        if (!username) {
+          showError('loginUsernameError', 'Username is required');
+          return;
+        }
+        
+        if (!password) {
+          showError('loginPasswordError', 'Password is required');
+          return;
+        }
+
+        // Show loading state
+        const submitBtn = loginForm.querySelector('button[type="submit"]');
+        submitBtn.classList.add('loading');
+        
+        // Simulate API call delay
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        try {
+          // Check if user exists
+          const users = JSON.parse(localStorage.getItem("users")) || [];
+          const user = users.find(u => u.username === username && u.password === password);
+          
+          if (!user) {
+            showError('loginPasswordError', 'Invalid username or password');
+            return;
+          }
+          
+          // Store current user session
+          localStorage.setItem("currentUser", JSON.stringify(user));
+          
+          // If remember me is checked, store for longer persistence
+          if (rememberMe) {
+            localStorage.setItem("rememberedUser", username);
+          } else {
+            localStorage.removeItem("rememberedUser");
+          }
+          
+          // Redirect to home page
+          window.location.href = "index.html";
+        } finally {
+          submitBtn.classList.remove('loading');
+        }
+      });
+
+      // Register form submission
+      registerForm.addEventListener("submit", async function(e) {
+        e.preventDefault();
+        clearErrors();
+        
+        const username = document.getElementById("regUsername").value.trim();
+        const email = document.getElementById("regEmail").value.trim();
+        const password = document.getElementById("regPassword").value.trim();
+        const confirmPassword = document.getElementById("regConfirmPassword").value.trim();
+        
+        // Validate inputs
+        if (!username) {
+          showError('regUsernameError', 'Username is required');
+          return;
+        }
+        
+        if (username.length < 3) {
+          showError('regUsernameError', 'Username must be at least 3 characters');
+          return;
+        }
+        
+        if (!email) {
+          showError('regEmailError', 'Email is required');
+          return;
+        }
+        
+        if (!isValidEmail(email)) {
+          showError('regEmailError', 'Please enter a valid email');
+          return;
+        }
+        
+        if (!password) {
+          showError('regPasswordError', 'Password is required');
+          return;
+        }
+        
+        if (password.length < 6) {
+          showError('regPasswordError', 'Password must be at least 6 characters');
+          return;
+        }
+        
+        if (password !== confirmPassword) {
+          showError('regConfirmPasswordError', 'Passwords do not match');
+          return;
+        }
+
+        // Show loading state
+        const submitBtn = registerForm.querySelector('button[type="submit"]');
+        submitBtn.classList.add('loading');
+        
+        // Simulate API call delay
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        try {
+          // Check if user already exists
+          const users = JSON.parse(localStorage.getItem("users")) || [];
+          const usernameExists = users.some(u => u.username === username);
+          const emailExists = users.some(u => u.email === email);
+          
+          if (usernameExists) {
+            showError('regUsernameError', 'Username already taken');
+            return;
+          }
+          
+          if (emailExists) {
+            showError('regEmailError', 'Email already registered');
+            return;
+          }
+          
+          // Create new user
+          const newUser = {
+            username,
+            email,
+            password,
+            phone: "",
+            address: "",
+            orders: []
+          };
+          
+          users.push(newUser);
+          localStorage.setItem("users", JSON.stringify(users));
+          localStorage.setItem("currentUser", JSON.stringify(newUser));
+          
+          // Redirect to home page with success message
+          window.location.href = "index.html?registration=success";
+        } finally {
+          submitBtn.classList.remove('loading');
+        }
+      });
+
+      // Check for remembered user on page load
+      document.addEventListener('DOMContentLoaded', function() {
+        const rememberedUser = localStorage.getItem("rememberedUser");
+        if (rememberedUser) {
+          document.getElementById("loginUsername").value = rememberedUser;
+          document.getElementById("rememberMe").checked = true;
+        }
+      });
+      
+    </script>
+  </body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Patil Restaurant</title>
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header class="site-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="header-logo">
+                        <a href="index.html">
+                            <img src="logo.png" width="160" height="36" alt="Logo">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-10">
+                    <div class="main-navigation">
+                        <button class="menu-toggle"><span></span><span></span></button>
+                        <nav class="header-menu">
+                            <ul class="menu food-nav-menu">
+                                <li><a href="index.html">Home</a></li>
+                                <li><a href="about.html">About</a></li>
+                                <li><a href="menu.html">Menu</a></li>
+                                <li><a href="Gallary.html">Book Table</a></li>
+                                <li><a href="blog.html">Blog</a></li>
+                                <li><a href="contact.html">Contact</a></li>
+                            </ul>
+                        </nav>
+                        <div class="header-right">
+                            <form action="#" class="header-search-form for-des" onsubmit="return false;">
+                                <input type="search" class="form-input" placeholder="Search Here...">
+                                <button type="submit">
+                                    <i class="uil uil-search"></i>
+                                </button>
+                            </form>
+                            <a href="cart.html" class="header-btn header-cart">
+                                <i class="uil uil-shopping-bag"></i>
+                                <span class="cart-number">0</span>
+                            </a>
+                            <a href="profile.html" class="header-btn">
+                                <i class="uil uil-user-md"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Profile Container -->
+    <div class="profile-container">
+        <!-- Login Section (shown when not logged in) -->
+        <div id="loginSection" class="profile-card auth-card">
+            <h2 class="profile-section-title">
+                <i class="uil uil-signin"></i> Welcome Back!
+            </h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email Address</label>
+                    <input type="email" id="loginEmail" class="form-control" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" class="form-control" placeholder="Enter your password" required>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                    <button type="button" id="cancelLogin" class="btn btn-secondary">Cancel</button>
+                </div>
+                <div class="auth-footer">
+                    <p>Don't have an account? <a href="#" id="showRegister">Sign up</a></p>
+                </div>
+            </form>
+        </div>
+
+        <!-- Profile Header (shown after login) -->
+        <div class="profile-header" id="profileHeader" style="display: none;">
+            <div class="profile-pic-container">
+                <div class="profile-pic">
+                    <i class="uil uil-user"></i>
+                </div>
+                <button class="edit-pic-btn" title="Change Photo">
+                    <i class="uil uil-camera"></i>
+                </button>
+            </div>
+            <h1 class="profile-name" id="profileName">Welcome!</h1>
+            <p class="profile-email" id="profileEmail">user@example.com</p>
+            <div class="profile-stats">
+                <div class="stat-item">
+                    <span class="stat-number" id="orderCount">0</span>
+                    <span class="stat-label">Orders</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="memberSince">0</span>
+                    <span class="stat-label">Days</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Content (shown after login) -->
+        <div class="profile-content" id="profileContent" style="display: none;">
+            <!-- View Profile Card -->
+            <div class="profile-card view-mode">
+                <div class="card-header">
+                    <h2 class="profile-section-title">
+                        <i class="uil uil-user-circle"></i> My Profile
+                    </h2>
+                    <button id="editProfileBtn" class="btn-edit">
+                        <i class="uil uil-edit"></i> Edit
+                    </button>
+                </div>
+                <div class="profile-info">
+                    <div class="info-item">
+                        <span class="info-label">Full Name</span>
+                        <span class="info-value" id="viewFullName">John Doe</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Email</span>
+                        <span class="info-value" id="viewEmail">john@example.com</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Phone</span>
+                        <span class="info-value" id="viewPhone">+1 234 567 890</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Address</span>
+                        <span class="info-value" id="viewAddress">123 Main St, City, Country</span>
+                    </div>
+                </div>
+                <button id="logoutBtn" class="btn btn-logout">
+                    <i class="uil uil-signout"></i> Logout
+                </button>
+            </div>
+
+            <!-- Edit Profile Card (hidden by default) -->
+            <div class="profile-card edit-mode" id="editProfileCard" style="display: none;">
+                <div class="card-header">
+                    <h2 class="profile-section-title">
+                        <i class="uil uil-edit"></i> Edit Profile
+                    </h2>
+                </div>
+                <form id="profileForm">
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" class="form-control" placeholder="Enter your full name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" class="form-control" placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" class="form-control" placeholder="Enter your phone number">
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Delivery Address</label>
+                        <textarea id="address" class="form-control" rows="3" placeholder="Enter your delivery address"></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                        <button type="button" id="cancelEdit" class="btn btn-secondary">Cancel</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Order History Card -->
+            <div class="profile-card">
+                <h2 class="profile-section-title">
+                    <i class="uil uil-history"></i> Order History
+                </h2>
+                <div id="orderHistory">
+                    <div class="no-orders">
+                        <i class="uil uil-bowl"></i>
+                        <h3>No Orders Yet</h3>
+                        <p>You haven't placed any orders yet</p>
+                        <a href="menu.html" class="btn btn-primary">Browse Menu</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bottom-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <p>© 2023 Patil Restaurant. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="assets/js/jquery-3.5.1.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="main.js"></script>
+    <script src="profile.js"></script>
+</body>
+</html>
