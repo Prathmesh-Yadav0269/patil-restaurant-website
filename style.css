@@ -1848,3 +1848,61 @@ p {
         padding: 20px;
     }
 }
+@media (max-width: 991px) {
+    /* Remove the rule that hides the cart */
+    .header-btn.header-cart {
+      display: flex !important;
+    }
+  
+    /* Adjust header-right layout for mobile */
+    .header-right {
+      position: absolute;
+      right: 80px; /* Space for menu toggle */
+      top: 50%;
+      transform: translateY(-50%);
+      margin-left: 0;
+      gap: 10px;
+    }
+  
+    /* Style the cart button specifically for mobile */
+    .header-btn.header-cart {
+      width: 36px;
+      height: 36px;
+      font-size: 18px;
+      margin-left: 0;
+    }
+  
+    /* Adjust cart number position for mobile */
+    .header-btn.header-cart .cart-number {
+      width: 18px;
+      height: 18px;
+      font-size: 10px;
+      top: -5px;
+      right: -5px;
+    }
+  
+    /* Style the profile button for mobile */
+    .header-btn:not(.header-cart) {
+      width: 36px;
+      height: 36px;
+      font-size: 18px;
+      margin-left: 0;
+    }
+  
+    /* Ensure header buttons are visible */
+    .header-btn {
+      box-shadow: 4px 4px 8px #dadada, -4px -4px 8px #ffffff;
+    }
+  }
+  
+  @media (max-width: 575px) {
+    .header-right {
+      right: 70px;
+      gap: 8px;
+    }
+    
+    .header-btn {
+      width: 34px;
+      height: 34px;
+    }
+  }
